@@ -26,15 +26,12 @@ pipeline:
           execution:
             steps:
               - step:
-                  type: Action
+                  type: Plugin
                   name: Setup JDK
                   identifier: Setup_JDK
                   spec:
-                    uses: actions/setup-java@v3
-                    with:
-                      distribution: zulu
-                      java-version: "17"
-                      cache: maven
+                    connectorRef: Docker_Connector
+                    image: maven:3.9.6-zulu-17
               - step:
                   type: Run
                   name: Build Gatling Simulation
@@ -45,12 +42,13 @@ pipeline:
                     envVariables:
                       GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
               - step:
-                  type: Action
-                  name: Gatling Enterprise Action
-                  identifier: Gatling_Enterprise_Action
+                  type: Run
+                  name: Start Gatling Simulation
+                  identifier: Start_Gatling_Simulation
                   spec:
-                    uses: gatling/enterprise-action@v1
-                    with:
-                      simulation_id: 330c7037-11bb-4a81-a5d4-11f9df770d93
-                    env:
-                      GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
+                    connectorRef: Docker_Connector
+                    image: gatlingcorp/enterprise-runner:1
+                    shell: Sh
+                    command: gatlingEnterpriseStart
+                    envVariables:
+                      SIMULATION_ID: 330c7037-11bb-4a81-a5d4-11f9df770d93
