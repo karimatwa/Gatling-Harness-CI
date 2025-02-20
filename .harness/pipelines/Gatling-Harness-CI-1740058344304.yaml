@@ -20,16 +20,30 @@ pipeline:
           execution:
             steps:
               - step:
-                  identifier: echo
-                  name: echo
+                  type: Action
+                  name: Setup JDK
+                  identifier: Setup_JDK
                   spec:
-                    command: echo hello world
-                  timeout: ""
+                    uses: actions/setup-java@v3
+                    with:
+                      distribution: zulu
+                      java-version: "17"
+                      cache: maven
+              - step:
                   type: Run
+                  name: Build Package
+                  identifier: Build_Package
+                  spec:
+                    shell: Sh
+                    command: mvn gatling:enterpriseUpload -Dgatling.enterprise.simulationId=
+                    envVariables:
+                      GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
+                      SIMULATION_ID: ""
           platform:
-            arch: Amd64
             os: Linux
+            arch: Amd64
           runtime:
-            spec: {}
             type: Docker
+            spec: {}
         type: CI
+        description: ""
