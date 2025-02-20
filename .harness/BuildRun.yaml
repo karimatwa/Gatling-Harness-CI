@@ -28,7 +28,7 @@ pipeline:
               - step:
                   type: Action
                   name: Setup JDK
-                  identifier: Action_1
+                  identifier: Setup_JDK
                   spec:
                     uses: actions/setup-java@v3
                     with:
@@ -37,8 +37,8 @@ pipeline:
                       cache: maven
               - step:
                   type: Run
-                  name: Build Gatling simulation
-                  identifier: Build_Gatling_simulation
+                  name: Build Gatling Simulation
+                  identifier: Build_Gatling_Simulation
                   spec:
                     shell: Sh
                     command: mvn gatling:enterpriseUpload -Dgatling.enterprise.simulationId=330c7037-11bb-4a81-a5d4-11f9df770d93
@@ -52,3 +52,5 @@ pipeline:
                     uses: gatling/enterprise-action@v1
                     with:
                       simulation_id: 330c7037-11bb-4a81-a5d4-11f9df770d93
+                    env:
+                      GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
