@@ -41,7 +41,7 @@ pipeline:
                       SIMULATION_ID: ""
           platform:
             os: Linux
-            arch: Amd64
+            arch: Arm64
           runtime:
             type: Docker
             spec: {}
