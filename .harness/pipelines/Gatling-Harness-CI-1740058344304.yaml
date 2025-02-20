@@ -40,7 +40,7 @@ pipeline:
                       GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
                       SIMULATION_ID: 330c7037-11bb-4a81-a5d4-11f9df770d93
           platform:
-            os: Linux
+            os: MacOS
             arch: Arm64
           runtime:
             type: Docker
