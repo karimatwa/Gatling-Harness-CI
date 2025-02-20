@@ -26,17 +26,12 @@ pipeline:
           execution:
             steps:
               - step:
-                  type: Plugin
-                  name: Setup JDK
-                  identifier: Setup_JDK
-                  spec:
-                    connectorRef: Docker_Connector
-                    image: maven:3.9.6-zulu-17
-              - step:
                   type: Run
                   name: Build Gatling Simulation
                   identifier: Build_Gatling_Simulation
                   spec:
+                    connectorRef: Docker_Connector
+                    image: maven:3.9.8-eclipse-temurin-17
                     shell: Sh
                     command: mvn gatling:enterpriseUpload -Dgatling.enterprise.simulationId=330c7037-11bb-4a81-a5d4-11f9df770d93
                     envVariables:
