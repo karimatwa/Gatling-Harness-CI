@@ -45,7 +45,7 @@ pipeline:
                     connectorRef: Docker_Connector
                     image: maven:3.9.8-eclipse-temurin-17
                     shell: Sh
-                    command: mvn gatling:enterpriseUpload -Dgatling.enterprise.simulationId=$GATLING_SIMULATION_ID
+                    command: mvn gatling:enterpriseStart -Dgatling.enterprise.simulationId=$GATLING_SIMULATION_ID
                     envVariables:
                       GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
                       GATLING_SIMULATION_ID: 330c7037-11bb-4a81-a5d4-11f9df770d93
