@@ -33,17 +33,19 @@ pipeline:
                     connectorRef: Docker_Connector
                     image: maven:3.9.8-eclipse-temurin-17
                     shell: Sh
-                    command: mvn gatling:enterpriseUpload -Dgatling.enterprise.simulationId=330c7037-11bb-4a81-a5d4-11f9df770d93
+                    command: mvn gatling:enterpriseUpload -Dgatling.enterprise.simulationId=$GATLING_SIMULATION_ID
                     envVariables:
                       GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
+                      GATLING_SIMULATION_ID: 330c7037-11bb-4a81-a5d4-11f9df770d93
               - step:
                   type: Run
                   name: Start Gatling Simulation
                   identifier: Start_Gatling_Simulation
                   spec:
                     connectorRef: Docker_Connector
-                    image: gatlingcorp/enterprise-runner:1
+                    image: maven:3.9.8-eclipse-temurin-17
                     shell: Sh
-                    command: gatlingEnterpriseStart
+                    command: mvn gatling:enterpriseUpload -Dgatling.enterprise.simulationId=$GATLING_SIMULATION_ID
                     envVariables:
-                      SIMULATION_ID: 330c7037-11bb-4a81-a5d4-11f9df770d93
+                      GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
+                      GATLING_SIMULATION_ID: 330c7037-11bb-4a81-a5d4-11f9df770d93
