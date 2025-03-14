@@ -36,3 +36,5 @@ pipeline:
                     command: mvn gatling:enterpriseStart -Dgatling.enterprise.simulationName="Stress-Test-Harness"
                     envVariables:
                       GATLING_ENTERPRISE_API_TOKEN: <+secrets.getValue("GE_API_TOKEN")>
+        when:
+          pipelineStatus: Success
